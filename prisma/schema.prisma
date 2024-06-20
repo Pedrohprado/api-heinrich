@@ -1,0 +1,35 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+model Register {
+    id               Int       @id @default(autoincrement())
+    nome             String
+    cartao           String
+    setor            String
+    liderResponsavel String
+    nivelDoOcorrido  String
+    validador        Staff?    @relation("Validador", fields: [validadorId], references: [id])
+    validadorId      Int?
+    dataValidacao    DateTime?
+    createdAt        DateTime  @default(now())
+    updatedAt        DateTime  @updatedAt
+}
+
+model Staff {
+    id                 Int      @id @default(autoincrement())
+    nome               String   @unique
+    cartao             String
+    setor              String
+    registrosValidados Int?     @default(0) // Campo para contar quantos registros esse staff validou
+    createdAt          DateTime @default(now())
+    updatedAt          DateTime @updatedAt
+
+    // Relação inversa para os registros que cada staff validou
+    registros Register[] @relation("Validador")
+}
