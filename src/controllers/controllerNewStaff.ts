@@ -100,6 +100,7 @@ export const loginStaff = async (req: Request, res: Response) => {
       const staff = await prisma.staff.findUnique({
         where: {
           cartao,
+          nome,
         },
       });
 
