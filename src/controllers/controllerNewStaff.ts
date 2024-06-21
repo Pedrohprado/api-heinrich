@@ -94,7 +94,7 @@ export const registerNewStaff = async (req: Request, res: Response) => {
 
 export const loginStaff = async (req: Request, res: Response) => {
   try {
-    const { nome, cartao, setor, password } = req.body;
+    const { nome, cartao, password } = req.body;
 
     if (req.body) {
       const staff = await prisma.staff.findUnique({

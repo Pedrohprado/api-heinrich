@@ -3,6 +3,7 @@ import {
   createNewRegister,
   deleteRegister,
   showAllRegister,
+  showAllRegisterNeedValidation,
   showByIdRegister,
   updateRegister,
 } from '../controllers/controllerNewRegister';
@@ -19,6 +20,7 @@ export const apiRouter = Router();
 apiRouter.delete('/deleteregister/:id', deleteRegister);
 apiRouter.put('/updateregister/:id', updateRegister);
 apiRouter.get('/showuniqueregister/:id', showByIdRegister);
+apiRouter.get('/showallregisterneedvalidation', showAllRegisterNeedValidation);
 apiRouter.get('/showallregister', showAllRegister);
 apiRouter.post('/createnewregister', createNewRegister);
 
