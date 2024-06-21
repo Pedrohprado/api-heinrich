@@ -24,7 +24,7 @@ model Register {
 model Staff {
     id                 Int      @id @default(autoincrement())
     nome               String   @unique
-    cartao             String
+    cartao             String   @unique
     setor              String
     passwordHash       String
     registrosValidados Int?     @default(0) // Campo para contar quantos registros esse staff validou
