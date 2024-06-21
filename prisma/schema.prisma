@@ -26,6 +26,7 @@ model Staff {
     nome               String   @unique
     cartao             String
     setor              String
+    passwordHash       String
     registrosValidados Int?     @default(0) // Campo para contar quantos registros esse staff validou
     createdAt          DateTime @default(now())
     updatedAt          DateTime @updatedAt
