@@ -15,6 +15,7 @@ import {
 } from '../controllers/controllerStaff';
 import { checkAuthorizedSetor } from '../middleware/checkSetor';
 import { validationRegister } from '../controllers/controllerUpdateRegister';
+import { verifyToken } from '../middleware/checkToken';
 
 export const apiRouter = Router();
 
@@ -45,3 +46,4 @@ apiRouter.put(
   checkAuthorizedSetor,
   validationRegister
 );
+apiRouter.get('/verifytoken', verifyToken);
