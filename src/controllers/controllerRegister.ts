@@ -74,7 +74,7 @@ export const showAllRegisterNeedValidation = async (
   try {
     const allRegisterNeedValidation = await prisma.register.findMany({
       where: {
-        dataValidacao: null,
+        validador: null,
       },
     });
     if (allRegisterNeedValidation)
@@ -87,7 +87,11 @@ export const showAllRegisterNeedValidation = async (
 
 export const showAllRegister = async (req: Request, res: Response) => {
   try {
-    const allRegister = await prisma.register.findMany();
+    const allRegister = await prisma.register.findMany({
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
 
     if (allRegister) res.status(200).json(allRegister);
   } catch (error) {

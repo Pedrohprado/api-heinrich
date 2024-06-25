@@ -6,26 +6,42 @@ import {
   showAllRegisterNeedValidation,
   showByIdRegister,
   updateRegister,
-} from '../controllers/controllerNewRegister';
+} from '../controllers/controllerRegister';
 import {
   deleteStaff,
   loginStaff,
   registerNewStaff,
   updateStaff,
-} from '../controllers/controllerNewStaff';
+} from '../controllers/controllerStaff';
+import { checkAuthorizedSetor } from '../middleware/checkSetor';
+import { validationRegister } from '../controllers/controllerUpdateRegister';
 
 export const apiRouter = Router();
-
-//routes for register
-apiRouter.delete('/deleteregister/:id', deleteRegister);
-apiRouter.put('/updateregister/:id', updateRegister);
-apiRouter.get('/showuniqueregister/:id', showByIdRegister);
-apiRouter.get('/showallregisterneedvalidation', showAllRegisterNeedValidation);
-apiRouter.get('/showallregister', showAllRegister);
-apiRouter.post('/createnewregister', createNewRegister);
 
 // routes for Staff
 apiRouter.delete('/deletestaff/:idStaff', deleteStaff);
 apiRouter.put('/updatestaff/:idStaff', updateStaff);
-apiRouter.post('/registerstaff', registerNewStaff);
+apiRouter.post(
+  '/registerstaff/:userId',
+  checkAuthorizedSetor,
+  registerNewStaff
+);
 apiRouter.post('/loginstaff', loginStaff);
+
+//routes for register
+apiRouter.put('/updateregister/:id', updateRegister);
+apiRouter.get('/showuniqueregister/:id', showByIdRegister);
+apiRouter.get(
+  '/showallregisterneedvalidation/:userId',
+  checkAuthorizedSetor,
+  showAllRegisterNeedValidation
+);
+apiRouter.get('/showallregister', showAllRegister);
+apiRouter.post('/createnewregister', createNewRegister);
+
+//routes for validation by staff the register
+apiRouter.put(
+  '/validationregister/:registroId/:staffId',
+  checkAuthorizedSetor,
+  validationRegister
+);
