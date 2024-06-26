@@ -18,20 +18,21 @@ model Register {
     validador        Staff?    @relation("Validador", fields: [validadorId], references: [id])
     validadorId      Int?
     dataValidacao    DateTime?
+    //criar um campo com a descrição do staff relação final
+    //criar campos para o ambulátorio(parte do corpo, etc ...)
     createdAt        DateTime  @default(now())
     updatedAt        DateTime  @updatedAt
 }
 
 model Staff {
-    id                 Int      @id @default(autoincrement())
-    nome               String   @unique
-    cartao             String   @unique
+    id                 Int        @id @default(autoincrement())
+    nome               String     @unique
+    cartao             String     @unique
     setor              String
     passwordHash       String
-    registrosValidados Int?     @default(0) // Campo para contar quantos registros esse staff validou
-    createdAt          DateTime @default(now())
-    updatedAt          DateTime @updatedAt
-
+    registrosValidados Int?       @default(0) // Campo para contar quantos registros esse staff validou
+    createdAt          DateTime   @default(now())
+    updatedAt          DateTime   @updatedAt
     // Relação inversa para os registros que cada staff validou
-    registros Register[] @relation("Validador")
+    registros          Register[] @relation("Validador")
 }

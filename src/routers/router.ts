@@ -20,8 +20,8 @@ import { verifyToken } from '../middleware/checkToken';
 export const apiRouter = Router();
 
 // routes for Staff
-apiRouter.delete('/deletestaff/:idStaff', deleteStaff);
-apiRouter.put('/updatestaff/:idStaff', updateStaff);
+apiRouter.delete('/deletestaff/:idStaff', checkAuthorizedSetor, deleteStaff);
+apiRouter.put('/updatestaff/:idStaff', checkAuthorizedSetor, updateStaff);
 apiRouter.post(
   '/registerstaff/:userId',
   checkAuthorizedSetor,
