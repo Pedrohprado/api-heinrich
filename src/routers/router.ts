@@ -41,9 +41,5 @@ apiRouter.get('/showallregister', showAllRegister);
 apiRouter.post('/createnewregister', createNewRegister);
 
 //routes for validation by staff the register
-apiRouter.put(
-  '/validationregister/:registroId/:staffId',
-  checkAuthorizedSetor,
-  validationRegister
-);
+apiRouter.put('/validationregister/:registroId/:staffId', validationRegister);
 apiRouter.get('/verifytoken', verifyToken);
