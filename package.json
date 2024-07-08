@@ -4,13 +4,14 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "node --watch ./dist/server.js"
+    "start": "node --env-file=.env --watch ./dist/server.js"
   },
   "dependencies": {
     "@prisma/client": "^5.15.1",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "express": "^4.19.2",
+    "helmet": "^7.1.0",
     "jsonwebtoken": "^9.0.2",
     "prisma": "^5.15.1"
   },
