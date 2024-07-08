@@ -13,15 +13,22 @@ model Register {
     cartao           String
     setor            String
     liderResponsavel String
-    nivelDoOcorrido  String
     descricao        String
+    cliente          String?
+    produto          String?
+    createdAt        DateTime  @default(now())
+    //possivel nivel do ocorrido no front-end -
+    nivelDoOcorrido  String
     validador        Staff?    @relation("Validador", fields: [validadorId], references: [id])
     validadorId      Int?
     dataValidacao    DateTime?
     //criar um campo com a descrição do staff relação final
     //criar campos para o ambulátorio(parte do corpo, etc ...)
-    createdAt        DateTime  @default(now())
     updatedAt        DateTime  @updatedAt
+}
+
+model Outpatient {
+    id Int @id @default(autoincrement())
 }
 
 model Staff {

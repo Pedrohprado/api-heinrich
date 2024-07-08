@@ -21,12 +21,6 @@ server.use('/api', apiRouter);
 server.use(notFoundPage);
 server.use(errorHandler);
 
-server.use((req, res) => {
-  res.status(404).json({
-    error: 'page notfound',
-  });
-});
-
 server.listen(PORT, SERVER, () => {
   console.log(SERVER, PORT);
   console.log('server running!');

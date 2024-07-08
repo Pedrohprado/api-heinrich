@@ -36,7 +36,7 @@ export const verifyToken = async (req: Request, res: Response) => {
       });
     } else {
       res.status(500).json({
-        error: 'token nor found',
+        error: 'token de acesso não encontrado',
       });
     }
   } catch (error) {
