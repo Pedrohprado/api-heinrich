@@ -67,24 +67,6 @@ export const showByIdRegister = async (req: Request, res: Response) => {
   }
 };
 
-export const showAllRegisterNeedValidation = async (
-  req: Request,
-  res: Response
-) => {
-  try {
-    const allRegisterNeedValidation = await prisma.register.findMany({
-      where: {
-        validador: null,
-      },
-    });
-    if (allRegisterNeedValidation)
-      res.status(200).json(allRegisterNeedValidation);
-  } catch (error) {
-    console.error('Erro ao mostrar registros', error);
-    res.status(500).json({ error: 'Erro ao mostrar registros' });
-  }
-};
-
 export const showAllRegister = async (req: Request, res: Response) => {
   try {
     const allRegister = await prisma.register.findMany({

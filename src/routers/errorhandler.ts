@@ -1,4 +1,4 @@
-import express, { ErrorRequestHandler, RequestHandler } from 'express';
+import { ErrorRequestHandler, RequestHandler } from 'express';
 export const notFoundPage: RequestHandler = (req, res) => {
   res.status(404).json({
     error: 'page not found',
