@@ -2,9 +2,6 @@ import { RequestHandler } from 'express';
 import { prisma } from '../services/prisma';
 import jwt from 'jsonwebtoken';
 
-//eu preciso criar uma rota que verifica o TOKEN gerado pelo loginUser
-//para através do msm pegar informações do usuário
-
 export const checkTokenUser: RequestHandler = async (req, res) => {
   try {
     if (req.headers.authorization) {

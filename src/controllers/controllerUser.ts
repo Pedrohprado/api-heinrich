@@ -3,6 +3,10 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { prisma } from '../services/prisma';
 
+//agora eu preciso criar as functions e routes que mostre os registers apenas do usuário logado, faço uma verific no token, depois um get com select register true]
+// preciso disponibilizar para editar e deletar quando o usuário estiver logado
+//todo register que o usuário fazer colocar uma rota put que vai atualizar o quantidadeDeRegistros também
+
 export const loginUser: RequestHandler = async (req, res) => {
   try {
     const { nome, cartao, password } = req.body;
