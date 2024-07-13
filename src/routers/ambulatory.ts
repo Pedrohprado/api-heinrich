@@ -3,7 +3,7 @@ import {
   showAllRegisterNeedValidationAmbulatory,
   validationRegisterByAmbulatory,
 } from '../controllers/controllerAmbulatory';
-import { checkAuthorizedForAmbulatory } from '../middleware/checkSetor';
+import { checkAuthorizedForAmbulatory } from '../middleware/checkambulatory';
 
 export const routerAmbulatory = express.Router();
 
