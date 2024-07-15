@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import { Request, RequestHandler, Response } from 'express';
+import { RequestHandler } from 'express';
 
 const prisma = new PrismaClient();
 
@@ -14,7 +14,7 @@ export const deleteRegister: RequestHandler = async (req, res) => {
         },
       });
       if (statusDeleteRegister)
-        res.json(200).json({
+        res.status(200).json({
           warning: 'Registro deletado com sucesso!',
         });
     }

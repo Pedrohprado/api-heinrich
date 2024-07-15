@@ -52,15 +52,6 @@ export const validationRegisterByAmbulatory: RequestHandler = async (
         data: body,
       });
 
-      await prisma.staff.update({
-        where: { id: +userId },
-        data: {
-          registrosValidados: {
-            increment: 1,
-          },
-        },
-      });
-
       res.status(201).json(registro);
     }
   } catch (error) {

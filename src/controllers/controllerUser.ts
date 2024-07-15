@@ -3,9 +3,51 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { prisma } from '../services/prisma';
 
-//agora eu preciso criar as functions e routes que mostre os registers apenas do usuário logado, faço uma verific no token, depois um get com select register true]
-// preciso disponibilizar para editar e deletar quando o usuário estiver logado
-//todo register que o usuário fazer colocar uma rota put que vai atualizar o quantidadeDeRegistros também
+export const updateUser: RequestHandler = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const body = req.body;
+
+    if (userId && body) {
+      const statusUpdateStaff = await prisma.user.update({
+        where: {
+          id: +userId,
+        },
+        data: body,
+      });
+
+      if (statusUpdateStaff)
+        res.status(201).json({
+          warning: 'staff atualizado com sucesso!',
+        });
+    }
+  } catch (error) {
+    console.error('Erro ao atualizar staff', error);
+    res.status(500).json({ error: 'Erro ao atualizar staff' });
+  }
+};
+
+export const deleteUser: RequestHandler = async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    if (userId) {
+      const statusDeleteStaff = await prisma.user.delete({
+        where: {
+          id: +userId,
+        },
+      });
+
+      if (statusDeleteStaff)
+        res.status(200).json({
+          warning: 'Staff deletado com sucesso',
+        });
+    }
+  } catch (error) {
+    console.error('Erro ao deletar staff', error);
+    res.status(500).json({ error: 'Erro ao deletar staff' });
+  }
+};
 
 export const loginUser: RequestHandler = async (req, res) => {
   try {
@@ -32,6 +74,7 @@ export const loginUser: RequestHandler = async (req, res) => {
           id: user.id,
           nome: user.nome,
           cartao: user.cartao,
+          role: user.role,
         },
         'secrete',
         { expiresIn: '2h' }
@@ -41,6 +84,7 @@ export const loginUser: RequestHandler = async (req, res) => {
         id: user.id,
         nome: user.nome,
         cartao: user.cartao,
+        role: user.role,
         token,
       });
     }
@@ -54,16 +98,18 @@ export const loginUser: RequestHandler = async (req, res) => {
 
 export const createNewUser: RequestHandler = async (req, res) => {
   try {
-    const { nome, cartao, setor, password } = req.body;
+    const { nome, cartao, setor, role, password } = req.body;
 
     if (req.body) {
       const salt = await bcrypt.genSalt(10);
       const passwordHash = await bcrypt.hash(password, salt);
+
       const registerNewUser = await prisma.user.create({
         data: {
           nome,
           cartao,
           setor,
+          role,
           passwordHash,
         },
       });

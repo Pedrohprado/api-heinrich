@@ -8,7 +8,7 @@ export const checkAuthorizedSetor: RequestHandler = async (req, res, next) => {
     const { userId } = req.params;
 
     if (userId) {
-      const user = await prisma.staff.findUnique({
+      const user = await prisma.user.findUnique({
         where: { id: +userId },
         select: { setor: true },
       });

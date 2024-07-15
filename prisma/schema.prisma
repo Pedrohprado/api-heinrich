@@ -20,6 +20,13 @@ datasource db {
 //     especialista
 // }
 
+enum ROLE {
+    ADMIN
+    STAFFAMBULATORY
+    STAFFTST
+    USER
+}
+
 model Register {
     id                       Int       @id @default(autoincrement())
     createdById              Int
@@ -55,36 +62,38 @@ model Register {
     validadorTSTId     Int?
 
     //chave linkada dos estaff
-    validadorAmbulatorio Staff? @relation("ValidadorAmbulatorio", fields: [validadorAmbulatorioId], references: [id])
-    validadorTST         Staff? @relation("ValidadorTST", fields: [validadorTSTId], references: [id])
-    User                 User   @relation(fields: [createdById], references: [id])
+    validadorAmbulatorio User? @relation("ValidadorAmbulatorio", fields: [validadorAmbulatorioId], references: [id])
+    validadorTST         User? @relation("ValidadorTST", fields: [validadorTSTId], references: [id])
+    User                 User  @relation(fields: [createdById], references: [id])
 }
 
 //a ideia para o projeto agora e ter um usuário para criar o registro, ou seja, o usuário vai estar logado, e assim conseguir criar um novo registro
 //dessa forma vou conseguir colocar funções de deletar para cada registro, PUTs,
 //conseguiremos ver quem está fazendos os registros e tudo mais
 model User {
-    id                Int        @id @default(autoincrement())
-    nome              String     @unique
-    cartao            String     @unique
-    setor             String
-    passwordHash      String
-    registrosEnviados Int?       @default(0)
-    createdAt         DateTime   @default(now())
-    updatedAt         DateTime   @updatedAt
-    Register          Register[]
-}
-
-model Staff {
     id                   Int        @id @default(autoincrement())
     nome                 String     @unique
     cartao               String     @unique
     setor                String
     passwordHash         String
-    registrosValidados   Int?       @default(0) // Campo para contar quantos registros esse staff validou
+    role                 ROLE
     createdAt            DateTime   @default(now())
     updatedAt            DateTime   @updatedAt
-    // Relação inversa para os registros que cada staff validou
+    Register             Register[]
     registrosAmbulatorio Register[] @relation("ValidadorAmbulatorio")
     registrosTST         Register[] @relation("ValidadorTST")
 }
+
+// model Staff {
+//     id                   Int        @id @default(autoincrement())
+//     nome                 String     @unique
+//     cartao               String     @unique
+//     setor                String
+//     passwordHash         String
+//     registrosValidados   Int?       @default(0) // Campo para contar quantos registros esse staff validou
+//     createdAt            DateTime   @default(now())
+//     updatedAt            DateTime   @updatedAt
+//     // Relação inversa para os registros que cada staff validou
+//     registrosAmbulatorio Register[] @relation("ValidadorAmbulatorio")
+//     registrosTST         Register[] @relation("ValidadorTST")
+// }

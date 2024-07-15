@@ -10,12 +10,13 @@ export const checkAuthorizedForAmbulatory: RequestHandler = async (
     const { userId } = req.params;
 
     if (userId) {
-      const user = await prisma.staff.findUnique({
+      const user = await prisma.user.findUnique({
         where: {
           id: +userId,
         },
         select: {
           setor: true,
+          role: true,
         },
       });
 
@@ -23,7 +24,7 @@ export const checkAuthorizedForAmbulatory: RequestHandler = async (
         return res.status(400).json({
           warning: 'você precisa estar logado para acessar essa area!',
         });
-      if (user.setor !== 'ambulatorio')
+      if (user.setor !== 'ambulatorio' && user.role !== 'STAFFAMBULATORY')
         return res.status(401).json({ warning: 'acesso não autorizado' });
 
       next();

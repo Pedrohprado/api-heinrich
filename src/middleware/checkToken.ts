@@ -18,7 +18,7 @@ export const verifyToken = async (req: Request, res: Response) => {
         cartao: string;
       };
 
-      const user = await prisma.staff.findUnique({
+      const user = await prisma.user.findUnique({
         where: {
           id: decoded.id,
           cartao: decoded.cartao,

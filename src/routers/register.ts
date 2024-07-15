@@ -12,8 +12,16 @@ import { checkTokenUserForNext } from '../middleware/checkuser';
 
 export const routerRegister = express.Router();
 
-routerRegister.delete('/deleteregister/:id', deleteRegister);
-routerRegister.put('/updateregister/:id', updateRegister);
+routerRegister.delete(
+  '/deleteregister/:id',
+  checkTokenUserForNext,
+  deleteRegister
+);
+routerRegister.put(
+  '/updateregister/:id',
+  checkTokenUserForNext,
+  updateRegister
+);
 routerRegister.get('/showuniqueregister/:id', showByIdRegister);
 routerRegister.get(
   '/showallregisterneedvalidation/:userId',
