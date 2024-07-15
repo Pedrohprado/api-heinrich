@@ -15,7 +15,10 @@ export const showRegistersValidationById: RequestHandler = async (req, res) => {
       if (allRegisterValidationById)
         res.status(200).json(allRegisterValidationById);
     }
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ warning: 'nenhum registro validado por aqui!' });
+  }
 };
 
 export const showAllRegisterNeedValidationAmbulatory: RequestHandler = async (
