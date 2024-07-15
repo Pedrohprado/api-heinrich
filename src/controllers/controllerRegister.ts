@@ -1,9 +1,9 @@
 import { PrismaClient } from '@prisma/client';
-import { Request, Response } from 'express';
+import { Request, RequestHandler, Response } from 'express';
 
 const prisma = new PrismaClient();
 
-export const deleteRegister = async (req: Request, res: Response) => {
+export const deleteRegister: RequestHandler = async (req, res) => {
   try {
     const { id } = req.params;
 
@@ -24,7 +24,7 @@ export const deleteRegister = async (req: Request, res: Response) => {
   }
 };
 
-export const updateRegister = async (req: Request, res: Response) => {
+export const updateRegister: RequestHandler = async (req, res) => {
   try {
     const { id } = req.params;
     const body = req.body;
@@ -48,7 +48,7 @@ export const updateRegister = async (req: Request, res: Response) => {
   }
 };
 
-export const showByIdRegister = async (req: Request, res: Response) => {
+export const showByIdRegister: RequestHandler = async (req, res) => {
   try {
     const { id } = req.params;
 
@@ -67,7 +67,7 @@ export const showByIdRegister = async (req: Request, res: Response) => {
   }
 };
 
-export const showAllRegister = async (req: Request, res: Response) => {
+export const showAllRegister: RequestHandler = async (req, res) => {
   try {
     const allRegister = await prisma.register.findMany({
       orderBy: {
@@ -82,7 +82,7 @@ export const showAllRegister = async (req: Request, res: Response) => {
   }
 };
 
-export const createNewRegister = async (req: Request, res: Response) => {
+export const createNewRegister: RequestHandler = async (req, res) => {
   try {
     const body = req.body;
 
@@ -101,5 +101,26 @@ export const createNewRegister = async (req: Request, res: Response) => {
   } catch (error) {
     console.error('Erro ao criar novo registro', error);
     res.status(500).json({ error: 'Erro ao criar novo registro' });
+  }
+};
+
+export const ListRegisterByUser: RequestHandler = async (req, res) => {
+  try {
+    const { idUser } = req.params;
+
+    if (idUser) {
+      const listRegister = await prisma.register.findMany({
+        where: {
+          createdById: +idUser,
+        },
+        orderBy: {
+          createdAt: 'asc',
+        },
+      });
+
+      if (listRegister) res.status(200).json(listRegister);
+    }
+  } catch (error) {
+    console.log(error);
   }
 };
