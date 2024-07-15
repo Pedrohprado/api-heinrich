@@ -1,6 +1,7 @@
 import express from 'express';
 import {
   showAllRegisterNeedValidationAmbulatory,
+  showRegistersValidationById,
   validationRegisterByAmbulatory,
 } from '../controllers/controllerAmbulatory';
 import { checkAuthorizedForAmbulatory } from '../middleware/checkambulatory';
@@ -12,6 +13,15 @@ routerAmbulatory.get(
   checkAuthorizedForAmbulatory,
   showAllRegisterNeedValidationAmbulatory
 );
+
+routerAmbulatory.get(
+  '/showregistervalidationbyid/:userId',
+  checkAuthorizedForAmbulatory,
+  showRegistersValidationById
+);
+
+//rota para deletar o registro, posso utilizar o   '/deleteregister/:id'
+//rota para alterar o registro utilizar a /updateregister/:id
 
 routerAmbulatory.put(
   '/validationregister/:registerId/:userId',

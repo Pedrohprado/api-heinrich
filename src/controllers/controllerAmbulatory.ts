@@ -1,6 +1,23 @@
 import { RequestHandler } from 'express';
 import { prisma } from '../services/prisma';
 
+export const showRegistersValidationById: RequestHandler = async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    if (userId) {
+      const allRegisterValidationById = await prisma.register.findMany({
+        where: {
+          validadorAmbulatorioId: +userId,
+        },
+      });
+
+      if (allRegisterValidationById)
+        res.status(200).json(allRegisterValidationById);
+    }
+  } catch (error) {}
+};
+
 export const showAllRegisterNeedValidationAmbulatory: RequestHandler = async (
   req,
   res
