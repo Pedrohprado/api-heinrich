@@ -64,7 +64,7 @@ export const validationRegisterByAmbulatory: RequestHandler = async (
     if (req.params && req.body) {
       body.validadorAmbulatorioId = +userId;
       body.dataValidacaoAmbulatorio = new Date();
-      const registro = await prisma.register.update({
+      const register = await prisma.register.update({
         where: {
           id: +registerId,
         },
@@ -72,7 +72,7 @@ export const validationRegisterByAmbulatory: RequestHandler = async (
         data: body,
       });
 
-      res.status(201).json(registro);
+      res.status(201).json(register);
     }
   } catch (error) {
     console.log('Erro ao validar registro', error);

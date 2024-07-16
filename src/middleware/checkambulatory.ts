@@ -8,7 +8,6 @@ export const checkAuthorizedForAmbulatory: RequestHandler = async (
 ) => {
   try {
     const { userId } = req.params;
-
     if (userId) {
       const user = await prisma.user.findUnique({
         where: {
@@ -20,14 +19,17 @@ export const checkAuthorizedForAmbulatory: RequestHandler = async (
         },
       });
 
-      if (!user)
+      if (!user) {
         return res.status(400).json({
           warning: 'você precisa estar logado para acessar essa area!',
         });
-      if (user.setor !== 'ambulatorio' && user.role !== 'STAFFAMBULATORY')
+      }
+      console.log(user);
+      if (user.setor === 'ambulatorio' && user.role === 'STAFFAMBULATORY') {
+        next();
+      } else {
         return res.status(401).json({ warning: 'acesso não autorizado' });
-
-      next();
+      }
     }
   } catch (error) {
     console.log(error);

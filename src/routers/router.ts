@@ -1,14 +1,13 @@
 import { Router } from 'express';
 
-import { verifyToken } from '../middleware/checkToken';
 import { routerAmbulatory } from './ambulatory';
 import { routerRegister } from './register';
 import { routerUser } from './user';
+import { routerTst } from './tstrouter';
 
 export const apiRouter = Router();
 
 apiRouter.use('/ambulatory', routerAmbulatory);
 apiRouter.use('/register', routerRegister);
 apiRouter.use('/user', routerUser);
-
-apiRouter.get('/verifytoken', verifyToken);
+apiRouter.use('/tst', routerTst);
