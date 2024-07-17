@@ -57,7 +57,7 @@ export const showAllRegisterNeedValidationByTst: RequestHandler = async (
 
 export const validationRegisterByTst: RequestHandler = async (req, res) => {
   try {
-    const { registerId } = req.params;
+    const { registerId, userId } = req.params;
     console.log(registerId);
     const body: {
       probabilidade: number;
@@ -68,6 +68,8 @@ export const validationRegisterByTst: RequestHandler = async (req, res) => {
     } = req.body;
 
     if (registerId && req.body) {
+      body.dataValidacaoTST = new Date();
+      body.validadorTSTId = +userId;
       const register = await prisma.register.update({
         where: {
           id: +registerId,
@@ -76,7 +78,9 @@ export const validationRegisterByTst: RequestHandler = async (req, res) => {
       });
 
       if (register) {
-        res.status(200).json(register);
+        res.status(200).json({
+          warning: 'registro validado com sucesso!',
+        });
       } else {
         res.status(400).json({
           warning: 'erro ao validar registro',

@@ -46,7 +46,7 @@ export const validationRegisterByAmbulatory: RequestHandler = async (
   try {
     const { registerId, userId } = req.params;
     const body: {
-      dataEntradaNoAmbulatorio: Date;
+      dataEntradaNoAmbulatorio: Date | string;
       enfermeiroResponsavel: string;
       parteDoCorpoAtingida: string;
       lateralidadeDoCorpo: string;
@@ -62,6 +62,7 @@ export const validationRegisterByAmbulatory: RequestHandler = async (
     console.log(body);
 
     if (req.params && req.body) {
+      body.dataEntradaNoAmbulatorio = new Date(body.dataEntradaNoAmbulatorio);
       body.validadorAmbulatorioId = +userId;
       body.dataValidacaoAmbulatorio = new Date();
       const register = await prisma.register.update({
@@ -72,7 +73,8 @@ export const validationRegisterByAmbulatory: RequestHandler = async (
         data: body,
       });
 
-      res.status(201).json(register);
+      if (register)
+        res.status(201).json({ warning: 'registro validado com sucesso!' });
     }
   } catch (error) {
     console.log('Erro ao validar registro', error);

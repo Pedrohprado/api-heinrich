@@ -24,7 +24,7 @@ export const checkAuthorizedForAmbulatory: RequestHandler = async (
           warning: 'você precisa estar logado para acessar essa area!',
         });
       }
-      console.log(user);
+
       if (user.setor === 'ambulatorio' && user.role === 'STAFFAMBULATORY') {
         next();
       } else {
