@@ -54,6 +54,7 @@ export const checkTokenUser: RequestHandler = async (req, res) => {
         id: user.id,
         nome: user.nome,
         cartao: user.cartao,
+        role: user.role,
       });
     } else {
       res.status(400).json({ warning: 'token não encontrado' });

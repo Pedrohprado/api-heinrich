@@ -85,8 +85,10 @@ export const showAllRegister: RequestHandler = async (req, res) => {
 export const createNewRegister: RequestHandler = async (req, res) => {
   try {
     const body = req.body;
+    const { userId } = req.params;
 
-    if (body) {
+    if (body && userId) {
+      body.createdById = +userId;
       const statusNewRegister = await prisma.register.create({
         data: body,
       });

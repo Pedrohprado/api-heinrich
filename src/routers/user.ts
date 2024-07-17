@@ -6,4 +6,6 @@ export const routerUser = express.Router();
 
 routerUser.post('/createnewuser', createNewUser);
 routerUser.post('/login', loginUser);
+
+//use this router for validation token, when user stay log by token
 routerUser.get('/token', checkTokenUser);

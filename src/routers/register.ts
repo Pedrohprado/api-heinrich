@@ -4,7 +4,7 @@ import {
   deleteRegister,
   ListRegisterByUser,
   // showAllRegister,
-  // showByIdRegister,
+  showByIdRegister,
   updateRegister,
 } from '../controllers/controllerRegister';
 import { checkTokenUserForNext } from '../middleware/checkuser';
@@ -17,7 +17,11 @@ routerRegister.get(
   ListRegisterByUser
 );
 
-routerRegister.post('/createnewregister', createNewRegister);
+routerRegister.post(
+  '/createnewregister/:userId',
+  checkTokenUserForNext,
+  createNewRegister
+);
 
 routerRegister.put(
   '/updateregister/:id',
@@ -29,6 +33,6 @@ routerRegister.delete(
   checkTokenUserForNext,
   deleteRegister
 );
-// routerRegister.get('/showuniqueregister/:id', showByIdRegister);
+routerRegister.get('/showuniqueregister/:id', showByIdRegister);
 
 // routerRegister.get('/showallregister', showAllRegister);
