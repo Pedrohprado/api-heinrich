@@ -33,6 +33,10 @@ routerRegister.delete(
   checkTokenUserForNext,
   deleteRegister
 );
-routerRegister.get('/showuniqueregister/:id', showByIdRegister);
+routerRegister.get(
+  '/showuniqueregister/:id',
+  checkTokenUserForNext,
+  showByIdRegister
+);
 
 // routerRegister.get('/showallregister', showAllRegister);
