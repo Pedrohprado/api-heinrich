@@ -37,9 +37,12 @@ export const showAllRegisterNeedValidationByTst: RequestHandler = async (
     const allRegisterNeedValidation = await prisma.register.findMany({
       where: {
         validadorTSTId: null,
-        NOT: {
-          validadorAmbulatorioId: null,
-        },
+        OR: [
+          { nivelDoOcorrido: 'condição insegura' },
+          {
+            validadorAmbulatorioId: { not: null },
+          },
+        ],
       },
     });
     if (allRegisterNeedValidation) {

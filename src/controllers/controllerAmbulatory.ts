@@ -29,6 +29,14 @@ export const showAllRegisterNeedValidationAmbulatory: RequestHandler = async (
     const allRegisterNeedValidation = await prisma.register.findMany({
       where: {
         validadorAmbulatorioId: null,
+        OR: [
+          {
+            nivelDoOcorrido: 'primeiros socorros',
+          },
+          {
+            nivelDoOcorrido: 'acidente',
+          },
+        ],
       },
     });
     if (allRegisterNeedValidation)
