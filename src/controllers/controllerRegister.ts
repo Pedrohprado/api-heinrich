@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import { RequestHandler } from 'express';
+import { deleteManyImg } from './controllerImagens';
 
 const prisma = new PrismaClient();
 
@@ -8,6 +9,8 @@ export const deleteRegister: RequestHandler = async (req, res) => {
     const { id } = req.params;
 
     if (id) {
+      await deleteManyImg(+id);
+
       const statusDeleteRegister = await prisma.register.delete({
         where: {
           id: +id,
