@@ -8,6 +8,7 @@ import {
   updateRegister,
 } from '../controllers/controllerRegister';
 import { checkTokenUserForNext } from '../middleware/checkuser';
+import { upload } from '../services/multer';
 
 export const routerRegister = express.Router();
 
@@ -20,6 +21,7 @@ routerRegister.get(
 routerRegister.post(
   '/createnewregister/:userId',
   checkTokenUserForNext,
+  upload.array('imagens', 3),
   createNewRegister
 );
 
