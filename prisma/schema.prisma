@@ -27,6 +27,13 @@ enum ROLE {
     USER
 }
 
+model Imagens {
+    id         Int      @id @default(autoincrement())
+    path       String
+    registerId Int
+    register   Register @relation(fields: [registerId], references: [id])
+}
+
 model Register {
     id                       Int       @id @default(autoincrement())
     createdById              Int
@@ -61,9 +68,10 @@ model Register {
     dataValidacaoTST   DateTime?
     validadorTSTId     Int?
 
-    validadorAmbulatorio User? @relation("ValidadorAmbulatorio", fields: [validadorAmbulatorioId], references: [id])
-    validadorTST         User? @relation("ValidadorTST", fields: [validadorTSTId], references: [id])
-    User                 User  @relation(fields: [createdById], references: [id])
+    validadorAmbulatorio User?     @relation("ValidadorAmbulatorio", fields: [validadorAmbulatorioId], references: [id])
+    validadorTST         User?     @relation("ValidadorTST", fields: [validadorTSTId], references: [id])
+    User                 User      @relation(fields: [createdById], references: [id])
+    Imagens              Imagens[]
 }
 
 model User {

@@ -86,19 +86,32 @@ export const createNewRegister: RequestHandler = async (req, res) => {
   try {
     const body = req.body;
     const { userId } = req.params;
+    const imagesPath = req.files;
 
     if (body && userId) {
       body.createdById = +userId;
-      const statusNewRegister = await prisma.register.create({
+      const newRegister = await prisma.register.create({
         data: body,
       });
 
-      if (statusNewRegister) {
-        console.log(statusNewRegister);
-        res.status(200).json({
-          warning: 'novo registro criado com sucesso!',
-        });
+      if (imagesPath && Object.keys(imagesPath).length > 0) {
+        if (Array.isArray(imagesPath)) {
+          const arrayImagens = imagesPath.map((file) => file.path.slice(12));
+
+          const createdImagens = await prisma.imagens.createMany({
+            data: arrayImagens.map((path) => ({
+              path,
+              registerId: newRegister.id,
+            })),
+          });
+
+          return res.status(200).json({
+            newRegister,
+            createdImagens,
+          });
+        }
       }
+      res.status(200).json(newRegister);
     }
   } catch (error) {
     console.error('Erro ao criar novo registro', error);
