@@ -60,6 +60,9 @@ export const showByIdRegister: RequestHandler = async (req, res) => {
         where: {
           id: +id,
         },
+        select: {
+          Imagens: true,
+        },
       });
 
       if (register) res.status(200).json(register);

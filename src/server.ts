@@ -15,7 +15,7 @@ server.use(cors());
 server.use(helmet());
 server.use(express.json());
 server.use(express.urlencoded({ extended: true }));
-server.use(express.static(path.join(__dirname, '../public')));
+server.use(express.static(path.join(__dirname, 'public')));
 
 server.use('/api', apiRouter);
 server.use(notFoundPage);
