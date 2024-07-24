@@ -60,7 +60,7 @@ export const showByIdRegister: RequestHandler = async (req, res) => {
         where: {
           id: +id,
         },
-        select: {
+        include: {
           Imagens: true,
         },
       });
