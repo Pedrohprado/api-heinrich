@@ -30,7 +30,6 @@ export const deleteManyImg = async (id: number) => {
 export const deleteImageById: RequestHandler = async (req, res) => {
   try {
     const { imageId } = req.params;
-
     if (imageId) {
       const statusDelete = await prisma.imagens.delete({
         where: {
