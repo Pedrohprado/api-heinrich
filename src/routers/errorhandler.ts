@@ -10,7 +10,7 @@ export const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
   console.log(err);
 
   if (err instanceof MulterError) {
-    res.json({ error: err.code });
+    res.status(400).json({ error: err.code });
   } else {
     res.status(500).json({
       error: 'erro interno no servidor',
