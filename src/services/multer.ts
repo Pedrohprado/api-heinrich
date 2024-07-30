@@ -4,7 +4,6 @@ import fs from 'fs';
 const storage = multer.diskStorage({
   destination(req, file, callback) {
     const uploadDir = './dist/public';
-
     if (!fs.existsSync(uploadDir)) {
       fs.mkdirSync(uploadDir, { recursive: true });
     }
@@ -16,9 +15,9 @@ const storage = multer.diskStorage({
 });
 
 export const upload = multer({
-  storage,
   fileFilter(req, file, callback) {
     const allowed: string[] = ['image/jpg', 'image/jpeg', 'image/png'];
     callback(null, allowed.includes(file.mimetype));
   },
+  storage,
 });

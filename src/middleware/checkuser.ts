@@ -20,7 +20,6 @@ export const checkTokenUserForNext: RequestHandler = async (req, res, next) => {
         id: decoded.id,
       },
     });
-
     if (user) next();
   } catch (error) {
     console.log(error);
