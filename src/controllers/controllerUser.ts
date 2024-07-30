@@ -50,6 +50,8 @@ export const deleteUser: RequestHandler = async (req, res) => {
 };
 
 export const loginUser: RequestHandler = async (req, res) => {
+  const SECRETE_KEY: string =
+    process.env.SECRETE_KEY || '36a5910394733b975acf825be4b26c5e';
   try {
     const { nome, cartao, password } = req.body;
 
@@ -76,7 +78,7 @@ export const loginUser: RequestHandler = async (req, res) => {
           cartao: user.cartao,
           role: user.role,
         },
-        'secrete',
+        SECRETE_KEY,
         { expiresIn: '2h' }
       );
 

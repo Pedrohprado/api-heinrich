@@ -3,13 +3,16 @@ import { prisma } from '../services/prisma';
 import jwt from 'jsonwebtoken';
 
 export const checkTokenUserForNext: RequestHandler = async (req, res, next) => {
+  const SECRETE_KEY: string =
+    process.env.SECRETE_KEY || '36a5910394733b975acf825be4b26c5e';
+
   try {
     if (!req.headers.authorization)
       return res.status(400).json({ warning: 'token não encontrado!' });
 
     const token = req.headers.authorization.split(' ')[1];
 
-    const decoded = jwt.verify(token, 'secrete') as {
+    const decoded = jwt.verify(token, SECRETE_KEY) as {
       id: number;
       nome: string;
       cartao: string;
@@ -28,11 +31,14 @@ export const checkTokenUserForNext: RequestHandler = async (req, res, next) => {
 };
 
 export const checkTokenUser: RequestHandler = async (req, res) => {
+  const SECRETE_KEY: string =
+    process.env.SECRETE_KEY || '36a5910394733b975acf825be4b26c5e';
+
   try {
     if (req.headers.authorization) {
       const token = req.headers.authorization.split(' ')[1];
 
-      const decoded = jwt.verify(token, 'secrete') as {
+      const decoded = jwt.verify(token, SECRETE_KEY) as {
         id: number;
         nome: string;
         cartao: string;
