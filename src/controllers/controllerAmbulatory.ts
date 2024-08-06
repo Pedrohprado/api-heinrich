@@ -56,7 +56,7 @@ export const validationRegisterByAmbulatory: RequestHandler = async (
     const body: {
       dataEntradaNoAmbulatorio: Date | string;
       enfermeiroResponsavel: string;
-      parteDoCorpoAtingida: string;
+      parteDoCorpoAtingida?: string[];
       lateralidadeDoCorpo: string;
       NaturezaDaLesao: string;
       cid: string;
@@ -73,16 +73,27 @@ export const validationRegisterByAmbulatory: RequestHandler = async (
       body.dataEntradaNoAmbulatorio = new Date(body.dataEntradaNoAmbulatorio);
       body.validadorAmbulatorioId = +userId;
       body.dataValidacaoAmbulatorio = new Date();
+
+      const bodyPart = body.parteDoCorpoAtingida;
+      delete body.parteDoCorpoAtingida;
+
       const register = await prisma.register.update({
         where: {
           id: +registerId,
         },
-
         data: body,
       });
 
-      if (register)
-        res.status(201).json({ warning: 'registro validado com sucesso!' });
+      if (register && bodyPart) {
+        const partsBody = await prisma.bodyParts.createMany({
+          data: bodyPart.map((part) => ({
+            registerId: register.id,
+            parte: part,
+          })),
+        });
+        if (partsBody)
+          res.status(201).json({ warning: 'registro validado com sucesso!' });
+      }
     }
   } catch (error) {
     console.log('Erro ao validar registro', error);

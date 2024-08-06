@@ -62,6 +62,7 @@ export const showByIdRegister: RequestHandler = async (req, res) => {
         },
         include: {
           Imagens: true,
+          BodyParts: true,
         },
       });
 

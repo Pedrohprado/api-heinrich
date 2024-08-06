@@ -34,6 +34,13 @@ model Imagens {
     register   Register @relation(fields: [registerId], references: [id])
 }
 
+model BodyParts {
+    id         Int      @id @default(autoincrement())
+    parte      String
+    registerId Int
+    register   Register @relation(fields: [registerId], references: [id])
+}
+
 model Register {
     id                       Int       @id @default(autoincrement())
     createdById              Int
@@ -50,7 +57,7 @@ model Register {
     //dadas para alimentar no ambulatorio
     dataEntradaNoAmbulatorio DateTime?
     enfermeiroResponsavel    String?
-    parteDoCorpoAtingida     String? //vai ter que receber um enum
+    // parteDoCorpoAtingida     String? //vai ter que receber um enum
     lateralidadeDoCorpo      String? //vai ter que receber um enum
     NaturezaDaLesao          String? //vai ter que receber um enum
     cid                      String? //codigo de atestado possívelmente
@@ -68,10 +75,11 @@ model Register {
     dataValidacaoTST   DateTime?
     validadorTSTId     Int?
 
-    validadorAmbulatorio User?     @relation("ValidadorAmbulatorio", fields: [validadorAmbulatorioId], references: [id])
-    validadorTST         User?     @relation("ValidadorTST", fields: [validadorTSTId], references: [id])
-    User                 User      @relation(fields: [createdById], references: [id])
+    validadorAmbulatorio User?       @relation("ValidadorAmbulatorio", fields: [validadorAmbulatorioId], references: [id])
+    validadorTST         User?       @relation("ValidadorTST", fields: [validadorTSTId], references: [id])
+    User                 User        @relation(fields: [createdById], references: [id])
     Imagens              Imagens[]
+    BodyParts            BodyParts[]
 }
 
 model User {
