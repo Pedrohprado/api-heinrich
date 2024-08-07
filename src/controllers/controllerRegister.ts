@@ -1,8 +1,6 @@
-import { PrismaClient } from '@prisma/client';
 import { RequestHandler } from 'express';
 import { deleteManyImg } from './controllerImagens';
-
-const prisma = new PrismaClient();
+import { prisma } from '../services/prisma';
 
 export const deleteRegister: RequestHandler = async (req, res) => {
   try {

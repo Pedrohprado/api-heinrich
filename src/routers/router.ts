@@ -5,9 +5,11 @@ import { routerRegister } from './register';
 import { routerUser } from './user';
 import { routerTst } from './tstrouter';
 import { routerImagem } from './imagem';
+import { routerReport } from './report';
 
 export const apiRouter = Router();
 
+apiRouter.use('/report', routerReport);
 apiRouter.use('/imagens', routerImagem);
 apiRouter.use('/ambulatory', routerAmbulatory);
 apiRouter.use('/register', routerRegister);
