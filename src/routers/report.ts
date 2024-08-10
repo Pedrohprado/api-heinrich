@@ -7,4 +7,4 @@ import {
 export const routerReport = express.Router();
 
 routerReport.get('/countbodyparts', listAllPartsOfBody);
-routerReport.get('/countlevelofacident', countLevelOfAcident);
+routerReport.get('/countlevelofacident/:date', countLevelOfAcident);

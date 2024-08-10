@@ -18,8 +18,21 @@ export const listAllPartsOfBody: RequestHandler = async (req, res) => {
 };
 
 export const countLevelOfAcident: RequestHandler = async (req, res) => {
+  const { date } = req.params;
+
+  const now = new Date(date);
+
+  const startOfDay = new Date(now.setHours(0, 0, 0, 0));
+  const endOfDay = new Date(now.setHours(23, 59, 59, 999));
+
   try {
     const levelsOfRegister = await prisma.register.groupBy({
+      where: {
+        createdAt: {
+          gte: startOfDay,
+          lte: endOfDay,
+        },
+      },
       by: ['nivelDoOcorrido'],
       _count: {
         nivelDoOcorrido: true,
